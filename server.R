@@ -1,18 +1,9 @@
-
+library(dplyr)
 
 ### Here we are loading variables and datasets which will be visible across all sessions.
 ### The server needs to be rebooted to update those variables
 
-base_dir = "~/Code/opendatapamplona/"
-setwd(base_dir)
 
-load("processed_data/dataset.RData")
-
-print("A")
-barrios <- unique(df_bse_summary$barrio)
-
-years <- unique(df_bse_summary$year)
-print(barrios)
 
 function(input, output, session) {
   
@@ -71,7 +62,7 @@ function(input, output, session) {
     ### TODO: By sex as in here: https://rpubs.com/walkerke/pyramids_ggplot2
     
     tmp <- df_bse %>%
-      filter(year==input$year & barrio == "Iturrama" & !is.na(n)) %>%
+      filter(year==input$year_detalle_barrio & barrio == input$barrio_detalle & !is.na(n)) %>%
       group_by(age) %>%
       summarise(n=sum(n))
     
@@ -79,7 +70,7 @@ function(input, output, session) {
     ggplot(tmp, aes(x=age, y=n)) + 
       geom_bar(stat="identity", position="dodge") +
       coord_flip() +
-      labs(x="Age", y="n", title=paste("Año ", input$year, sep=""))
+      labs(x="Age", y="n", title=paste(input$barrio_detalle, "\nAño ", input$year_detalle_barrio, sep=""))
     
   })
   

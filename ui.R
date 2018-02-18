@@ -35,14 +35,16 @@ navbarPage("Open Data Pamplona",
              tabPanel("Detalle barrio",
                       sidebarLayout(
                         sidebarPanel(
-                          # selectInput("barrio", label = h3("Select barrio"), 
-                          #             choices = barrios, 
-                          #             selected = min(barrios)),
+                          selectInput("barrio_detalle", label = h3("Select barrio"),
+                                      choices = barrios,
+                                      selected = barrios[1]),
                           
-                          selectInput("year", label = h3("Select year"), 
+                          hr(),
+                          
+                          selectInput("year_detalle_barrio", label = h3("Select year"), 
                                       choices = years, 
-                                      selected = max(years)),
-                          hr()
+                                      selected = max(years))
+                         
 
                         ),
                         mainPanel(
