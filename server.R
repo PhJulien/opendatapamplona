@@ -62,16 +62,16 @@ function(input, output, session) {
     
     ### TODO: By sex as in here: https://rpubs.com/walkerke/pyramids_ggplot2
     
-    tmp <- df_bse %>%
-      filter(year==input$year_detalle_barrio & barrio == input$barrio_detalle & !is.na(n)) %>%
-      group_by(age) %>%
-      summarise(n=sum(n))
+
+    tmp <- df_bse_pyramid  %>%
+      filter(year==input$year_detalle_barrio & barrio == input$barrio_detalle)
     
-    
-    ggplot(tmp, aes(x=age, y=n)) + 
-      geom_bar(stat="identity", position="dodge") +
+    ggplot(data=tmp) +
+      geom_bar(aes(age_category,n,group=sex,fill=sex), stat = "identity",subset(tmp,tmp$sex=="M")) +
+      geom_bar(aes(age_category,-n,group=sex,fill=sex), stat = "identity",subset(tmp,tmp$sex=="H")) +
       coord_flip() +
-      labs(x="Age", y="n", title=paste(input$barrio_detalle, "\nAño ", input$year_detalle_barrio, sep=""))
+      labs(x="Edad", y="Numero de personas", title=paste(input$barrio_detalle, "\nAño ", input$year_detalle_barrio, sep=""), fill="Sexo") +
+      theme_bw()
     
   })
   
