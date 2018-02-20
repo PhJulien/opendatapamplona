@@ -15,6 +15,12 @@ library(reshape2)
 #### Reshaping
 df_bse_raw <- read.csv("data/barrio_edad_sexo.csv", sep=";")
 
+df_bse_raw <- df_bse_raw %>%
+  mutate(BARRIO = as.character(BARRIO),
+        BARRIO = gsub('\xd1','Ñ', BARRIO),
+         BARRIO = gsub('\xf1', 'ñ', BARRIO),
+        BARRIO = gsub('AZPILAGAÑA', 'Azpilagaña', BARRIO),
+        BARRIO = as.factor(BARRIO))
 
 df_bse <- melt(df_bse_raw, id.vars=c("ANYO", "BARRIO", "SEXO"))
 colnames(df_bse) <- c("year", "barrio", "gender", "age", "n")

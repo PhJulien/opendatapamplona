@@ -20,7 +20,8 @@ function(input, output, session) {
     ggplot(tmp, aes(x=barrio, y=mean)) + 
       geom_bar(stat="identity", position="dodge") +
       coord_flip() +
-      labs(x="", y="Edad media", title=paste("Año ", input$year, sep=""))
+      labs(x="", y="Edad media", title=paste("Año ", input$year, sep="")) +
+      theme_linedraw()
     
   })
 
